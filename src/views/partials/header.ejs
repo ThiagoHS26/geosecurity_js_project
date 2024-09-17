@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <!-- Nombre del proyecto -->
+    <a class="navbar-brand" href="index">GEOmaps</a>
+
+    <!-- Botón para colapsar la barra de navegación en pantallas pequeñas -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Contenido colapsable -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <!-- Dropdown de nuevo registro -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nuevo registro</a>
+          <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#crimeModal">Registro individual</a></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#multiData">Carga masiva</a></li>
+          </ul>
+        </li>
+        
+        <!-- Dropdown de servicios -->
+        <!-- La seccion de servicios se irá añadiendo en versiones futuras -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">Servicios</a>
+          <ul class="dropdown-menu" aria-labelledby="servicesDropdown2">
+            <li><a class="dropdown-item" href="#">Mapas de calor</a></li>
+            <li><a class="dropdown-item" href="#">Análisis predictivo</a></li>
+            <li><a class="dropdown-item" href="#">Estadísticas</a></li>
+            <li><a class="dropdown-item" href="#">Reportar crímenes</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Login/Logout y nombre del usuario -->
+      <ul class="navbar-nav ms-auto">
+        <% if (user) { %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="optionsUser" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= user.name %>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="optionsUser">
+              <li><a class="dropdown-item" href="/auth/logout">Logout</a></li>
+            </ul>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/login">Login</a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

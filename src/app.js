@@ -1,5 +1,8 @@
 import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import morgan from 'morgan';
 import path from 'path';
@@ -19,21 +22,36 @@ const app = express();
 
 connectMongoDB();
 
-// Configurar middleware de sesión
+//Manejo de sesiones
 app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
+  secret: process.env.SESSION_SECRET, // Cambia por tu clave secreta real
+  resave: false, 
   saveUninitialized: true,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,
+    ttl: 14 * 24 * 60 * 60 // 14 días
+  }),
+  cookie: { secure: false } // Cambia a "true" si usas HTTPS
 }));
 
 // Inicializar Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Middleware
+/* MIDDLEWARES */
+app.use(helmet({
+  contentSecurityPolicy: false,
+}));
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
+
+//Manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 //Vistas
 app.set('views', path.join(__dirname, 'views'));
